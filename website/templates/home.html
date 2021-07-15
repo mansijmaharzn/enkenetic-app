@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<br>
+<h1 align="center">EnkE Feed</h1>
+<br>
+
+<div>
+{% for post in allPost %}
+<div class="card text-center">
+  <div class="card-header">
+    {{ post.username }}
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{ post.title }}</h5>
+    <p class="card-text">{{ post.data }}</p>
+  </div>
+  <div class="card-footer text-muted">
+    {{ post.likes.count() }} Likes
+    {% if current_user.has_liked_post(post) %}
+    <a href="{{ url_for('views.like_action', post_id=post.id, action='unlike') }}">
+      <button type="button" class="btn btn-outline-danger float-right">Unlike</button>
+    </a>
+    {% else %}
+    <a href="{{ url_for('views.like_action', post_id=post.id, action='like') }}">
+      <button type="button" class="btn btn-outline-primary float-right">Like</button>
+    </a>
+    {% endif %}
+  </div>
+</div>
+<br />
+{% endfor %}
+</div>
+
+{% endblock %}
